@@ -24,6 +24,8 @@ public class ConcreteHopperSubsystem extends HopperSubsystem {
 
     private final ProfiledPIDController wristPID;
 
+    // TODO: Why does hopper have its own copy of state?
+    //  -- Jonathan
     private ScoringSuperstructureState state = ScoringSuperstructureState.IDLE;
     private final Trigger hasCoral;
 
