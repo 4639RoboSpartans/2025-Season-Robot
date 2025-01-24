@@ -7,16 +7,16 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.Objects;
 
-public abstract class CoralIntakeSubsystem extends SubsystemBase {
-    private static CoralIntakeSubsystem instance;
+public abstract class AlgaeIntakeSubsystem extends SubsystemBase {
+    private static AlgaeIntakeSubsystem instance;
 
-    public static CoralIntakeSubsystem getInstance() {
-        return instance = Objects.requireNonNullElseGet(instance, ConcreteCoralIntakeSubsystem::new);
+    public static AlgaeIntakeSubsystem getInstance() {
+        return instance = Objects.requireNonNullElseGet(instance, ConcreteAlgaeIntakeSubsystem::new);
     }
 
-    protected abstract void setIntakeState(CoralIntakeState intakeState);
+    protected abstract void setIntakeState(AlgaeIntakeState intakeState);
 
-    public Command setIntakeStateCommand(CoralIntakeState state) {
+    public Command setIntakeStateCommand(AlgaeIntakeState state) {
         return Commands.runOnce(
             () -> setIntakeState(state)
         );

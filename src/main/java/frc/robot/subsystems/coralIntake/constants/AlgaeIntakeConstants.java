@@ -1,6 +1,6 @@
 package frc.robot.subsystems.coralIntake.constants;
 
-public class CoralIntakeConstants {
+public class AlgaeIntakeConstants {
     public static class PivotConstants {
         public static final double downPosition = 0;
         public static final double upPosition = 1;

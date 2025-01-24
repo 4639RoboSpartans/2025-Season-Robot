@@ -1,7 +1,7 @@
 package frc.robot.subsystems.coralIntake;
-import frc.robot.subsystems.coralIntake.constants.CoralIntakeConstants.*;
+import frc.robot.subsystems.coralIntake.constants.AlgaeIntakeConstants.*;
 
-public enum CoralIntakeState {
+public enum AlgaeIntakeState {
     INTAKING(0, 0.5),
     OUTTAKING(0, -0.5),
     EXTENDED(0, 0),
@@ -10,7 +10,7 @@ public enum CoralIntakeState {
     private final double positionPercentage;
     public final double intakeSpeed;
 
-    CoralIntakeState(double positionPercentage, double intakeSpeed) {
+    AlgaeIntakeState(double positionPercentage, double intakeSpeed) {
         this.positionPercentage = positionPercentage;
         this.intakeSpeed = intakeSpeed;
     }
