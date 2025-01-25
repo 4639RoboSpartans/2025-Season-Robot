@@ -50,7 +50,7 @@ public class RobotContainer {
         RatchetMotor ratchetMotor = new RatchetMotor(motor, 8, RatchetMotor.RatchetDirection.Forwards);
 
         oi.driverController().POV_UP.whileTrue(new StartEndCommand(
-            () -> ratchetMotor.set(.5),
+            () -> ratchetMotor.set(.25),
             () -> ratchetMotor.set(0)
         ));
         oi.driverController().POV_DOWN.whileTrue(new StartEndCommand(
