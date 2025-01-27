@@ -1,4 +1,4 @@
-package frc.robot.subsystems.coralIntake.constants;
+package frc.robot.subsystems.algaeIntake.constants;
 
 import frc.lib.TunableNumber;
 

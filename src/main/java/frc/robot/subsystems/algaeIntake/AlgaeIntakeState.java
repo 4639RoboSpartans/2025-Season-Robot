@@ -1,5 +1,6 @@
-package frc.robot.subsystems.coralIntake;
-import frc.robot.subsystems.coralIntake.constants.AlgaeIntakeConstants.*;
+package frc.robot.subsystems.algaeIntake;
+import edu.wpi.first.math.geometry.Rotation2d;
+import frc.robot.subsystems.algaeIntake.constants.AlgaeIntakeConstants.*;
 
 public enum AlgaeIntakeState {
     INTAKING(0, 0.5),
@@ -17,5 +18,9 @@ public enum AlgaeIntakeState {
 
     public double getAbsolutePosition() {
         return PivotConstants.downPosition + positionPercentage * PivotConstants.positionDiff;
+    }
+
+    public Rotation2d getSimAngle() {
+        return Rotation2d.fromDegrees(positionPercentage * 90);
     }
 }

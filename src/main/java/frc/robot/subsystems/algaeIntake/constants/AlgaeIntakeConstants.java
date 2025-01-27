@@ -1,4 +1,4 @@
-package frc.robot.subsystems.coralIntake.constants;
+package frc.robot.subsystems.algaeIntake.constants;
 
 public class AlgaeIntakeConstants {
     public static class PivotConstants {
@@ -12,5 +12,7 @@ public class AlgaeIntakeConstants {
     public static class IDs {
         public static final int pivotID = 23;
         public static final int intakeID = 1;
+
+        public static final int encoderID = 2;
     }
 }
