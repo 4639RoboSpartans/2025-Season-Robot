@@ -1,10 +1,5 @@
 package frc.robot.subsystems.algaeIntake;
 
-import com.ctre.phoenix6.configs.MotionMagicConfigs;
-import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel;
@@ -20,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.algaeIntake.constants.AlgaeIntakeConstants;
 import frc.robot.subsystems.algaeIntake.constants.AlgaeIntakePIDs;
 
+@Deprecated
 public class ConcreteAlgaeIntakeSubsystem extends AlgaeIntakeSubsystem implements Subsystem {
     private final SparkMax intakePivot;
     private final SparkFlex intakeMotor;

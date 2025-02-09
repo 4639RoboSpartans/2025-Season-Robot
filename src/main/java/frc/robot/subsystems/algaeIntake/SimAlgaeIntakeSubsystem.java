@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.algaeIntake.constants.AlgaeIntakeConstants;
 import frc.robot.subsystems.algaeIntake.constants.AlgaeIntakePIDs;
 
+@Deprecated
 public class SimAlgaeIntakeSubsystem extends AlgaeIntakeSubsystem {
     private final ProfiledPIDController pivotPID;
     private final SingleJointedArmSim pivotSim;

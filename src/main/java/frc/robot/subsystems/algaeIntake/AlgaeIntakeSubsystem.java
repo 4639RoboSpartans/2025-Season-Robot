@@ -8,6 +8,7 @@ import frc.robot.Robot;
 
 import java.util.Objects;
 
+@Deprecated
 public abstract class AlgaeIntakeSubsystem extends SubsystemBase {
     private static AlgaeIntakeSubsystem instance;
 

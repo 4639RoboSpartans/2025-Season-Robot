@@ -2,6 +2,7 @@ package frc.robot.subsystems.algaeIntake;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.algaeIntake.constants.AlgaeIntakeConstants.*;
 
+@Deprecated
 public enum AlgaeIntakeState {
     INTAKING(0, 0.5),
     OUTTAKING(0, -0.5),
