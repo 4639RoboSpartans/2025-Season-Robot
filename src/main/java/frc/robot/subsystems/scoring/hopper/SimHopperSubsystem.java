@@ -24,22 +24,19 @@ public class SimHopperSubsystem extends HopperSubsystem {
     private ScoringSuperstructureState state = ScoringSuperstructureState.IDLE;
     private double intakeSpeed;
 
-    private final ScoringSuperstructure scoringSuperstructure;
-
     private double secondsFromIntakeOuttakeStart = 0;
 
     private boolean isStateFinished = false;
 
-    public SimHopperSubsystem(ScoringSuperstructure scoringSuperstructure) {
-        this.scoringSuperstructure = scoringSuperstructure;
+    public SimHopperSubsystem() {
         intakeSpeed = 0;
         pivotPID = new ProfiledPIDController(
-                ScoringPIDs.wristKp.get(),
-                ScoringPIDs.wristKi.get(),
-                ScoringPIDs.wristKd.get(),
+                ScoringPIDs.simWristKp.get(),
+                ScoringPIDs.simWristKi.get(),
+                ScoringPIDs.simWristKd.get(),
                 new TrapezoidProfile.Constraints(
-                        ScoringPIDs.wristVelocity.get(),
-                        ScoringPIDs.wristAcceleration.get()
+                        ScoringPIDs.simWristVelocity.get(),
+                        ScoringPIDs.simWristAcceleration.get()
                 )
         );
         pivotFeedforward = new ArmFeedforward(
@@ -134,7 +131,7 @@ public class SimHopperSubsystem extends HopperSubsystem {
     @Override
     public void runHopper() {
         runHopperPosition();
-        if (scoringSuperstructure.isAtPosition() && !isStateFinished) {
+        if (ScoringSuperstructure.getInstance().isAtPosition() && !isStateFinished) {
             intakeSpeed = state.intakeSpeed;
             secondsFromIntakeOuttakeStart += 0.020;
         }
@@ -153,14 +150,14 @@ public class SimHopperSubsystem extends HopperSubsystem {
 
     private void updatePIDs() {
         pivotPID.setPID(
-                ScoringPIDs.wristKp.get(),
-                ScoringPIDs.wristKi.get(),
-                ScoringPIDs.wristKd.get()
+                ScoringPIDs.simWristKp.get(),
+                ScoringPIDs.simWristKi.get(),
+                ScoringPIDs.simWristKd.get()
         );
         pivotPID.setConstraints(
                 new TrapezoidProfile.Constraints(
-                        ScoringPIDs.wristVelocity.get(),
-                        ScoringPIDs.wristAcceleration.get()
+                        ScoringPIDs.simWristVelocity.get(),
+                        ScoringPIDs.simWristAcceleration.get()
                 )
         );
     }

@@ -10,6 +10,7 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.lib.TunableElevatorFeedforward;
 import frc.robot.subsystems.scoring.ScoringSuperstructureState;
 import frc.robot.subsystems.scoring.constants.ScoringConstants;
 import frc.robot.subsystems.scoring.constants.ScoringPIDs;
@@ -19,7 +20,7 @@ import static edu.wpi.first.units.Units.Volts;
 
 public class SimElevatorSubsystem extends ElevatorSubsystem {
     private final ProfiledPIDController elevatorPID;
-    private final ElevatorFeedforward elevatorFeedforward;
+    private final TunableElevatorFeedforward elevatorFeedforward;
     private final ElevatorSim elevatorSim;
 
     private ScoringSuperstructureState state = ScoringSuperstructureState.IDLE;
@@ -28,19 +29,19 @@ public class SimElevatorSubsystem extends ElevatorSubsystem {
 
     public SimElevatorSubsystem() {
         elevatorPID = new ProfiledPIDController(
-                ScoringPIDs.elevatorKp.get(),
-                ScoringPIDs.elevatorKi.get(),
-                ScoringPIDs.elevatorKd.get(),
+                ScoringPIDs.simElevatorKp.get(),
+                ScoringPIDs.simElevatorKi.get(),
+                ScoringPIDs.simElevatorKd.get(),
                 new TrapezoidProfile.Constraints(
-                        ScoringPIDs.elevatorVelocity.get(),
-                        ScoringPIDs.elevatorAcceleration.get()
+                        ScoringPIDs.simElevatorVelocity.get(),
+                        ScoringPIDs.simElevatorAcceleration.get()
                 )
         );
-        elevatorFeedforward = new ElevatorFeedforward(
-                ScoringPIDs.elevatorKs.get(),
-                ScoringPIDs.elevatorKg.get(),
-                ScoringPIDs.elevatorKv.get(),
-                ScoringPIDs.elevatorKa.get()
+        elevatorFeedforward = new TunableElevatorFeedforward(
+                ScoringPIDs.simElevatorKs.get(),
+                ScoringPIDs.simElevatorKg.get(),
+                ScoringPIDs.simElevatorKv.get(),
+                ScoringPIDs.simElevatorKa.get()
         );
         elevatorSim = new ElevatorSim(
                 LinearSystemId.createElevatorSystem(
@@ -87,7 +88,7 @@ public class SimElevatorSubsystem extends ElevatorSubsystem {
                 ScoringSuperstructureState.getElevatorSimPosition(getTargetLength()),
                 ScoringSuperstructureState.getElevatorSimPosition(getCurrentLength()),
                 ScoringConstants.ElevatorConstants.ELEVATOR_TOLERANCE
-        ) && elevatorSim.getVelocityMetersPerSecond() < 0.1;
+        ) && elevatorSim.getVelocityMetersPerSecond() < 0.05;
     }
 
     @Override
@@ -110,25 +111,31 @@ public class SimElevatorSubsystem extends ElevatorSubsystem {
     @Override
     public void runElevator() {
         elevatorPID.setGoal(ScoringSuperstructureState.getElevatorSimPosition(state.getElevatorLength()));
-        double output = -elevatorPID.calculate(getCurrentPosition())
+        double output = elevatorPID.calculate(getCurrentPosition())
                 + elevatorFeedforward.calculate(elevatorPID.getSetpoint().velocity);
         elevatorSim.setInputVoltage(output);
         SmartDashboard.putNumber("Elevator PID output", output);
         SmartDashboard.putNumber("Elevator Sim Position", getCurrentPosition());
+        SmartDashboard.putNumber("Elevator Setpoint Position", elevatorPID.getSetpoint().position);
+        SmartDashboard.putNumber("Elevator Setpoint Velocity", elevatorPID.getSetpoint().velocity);
     }
 
     private void updatePIDs() {
         elevatorPID.setPID(
-                ScoringPIDs.elevatorKp.get(),
-                ScoringPIDs.elevatorKi.get(),
-                ScoringPIDs.elevatorKd.get()
+                ScoringPIDs.simElevatorKp.get(),
+                ScoringPIDs.simElevatorKi.get(),
+                ScoringPIDs.simElevatorKd.get()
         );
         elevatorPID.setConstraints(
                 new TrapezoidProfile.Constraints(
-                        ScoringPIDs.elevatorVelocity.get(),
-                        ScoringPIDs.elevatorAcceleration.get()
+                        ScoringPIDs.simElevatorVelocity.get(),
+                        ScoringPIDs.simElevatorAcceleration.get()
                 )
         );
+        elevatorFeedforward.setKa(ScoringPIDs.simElevatorKa.get());
+        elevatorFeedforward.setKg(ScoringPIDs.simElevatorKg.get());
+        elevatorFeedforward.setKv(ScoringPIDs.simElevatorKv.get());
+        elevatorFeedforward.setKs(ScoringPIDs.simElevatorKs.get());
     }
 
     @Override
